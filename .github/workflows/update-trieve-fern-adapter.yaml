@@ -48,10 +48,9 @@ jobs:
           CURRENT_VERSION=$(node -p "require('./package.json').version")
           BRANCH_NAME="trieve-fern-adapter/v${CURRENT_VERSION}"
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          git checkout -b $BRANCH_NAME
           git add package.json
           git commit -m "chore: bump trieve-fern-adapter version to ${CURRENT_VERSION}"
-          git branch $BRANCH_NAME
-          git checkout $BRANCH_NAME
           git push --set-upstream origin $BRANCH_NAME
 
       - name: Create Pull Request
