@@ -64,8 +64,6 @@ jobs:
             - Bumps trieve-fern-adapter version to ${{ env.CURRENT_VERSION }}" \
             --base main \
             --head ${{ env.BRANCH_NAME }} \
-            --label "automated pr" \
-            --label "release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
