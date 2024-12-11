@@ -44,12 +44,13 @@ jobs:
       - name: Create version bump branch
         working-directory: ./clients/trieve-fern-adapter
         run: |
-          BRANCH_NAME="chore/bump-trieve-fern-adapter-version-$(date +%s)"
+          yarn version --patch --no-git-tag-version
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          BRANCH_NAME="trieve-fern-adapter/v${CURRENT_VERSION}"
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
           git checkout -b $BRANCH_NAME
-          yarn version --patch --no-git-tag-version
           git add package.json
-          git commit -m "chore: bump trieve-fern-adapter version to $(node -p "require('./package.json').version")"
+          git commit -m "chore: bump trieve-fern-adapter version to ${CURRENT_VERSION}"
           git push origin $BRANCH_NAME
 
       - name: Create Pull Request
