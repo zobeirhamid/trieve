@@ -41,18 +41,24 @@ jobs:
         working-directory: ./clients/trieve-fern-adapter
         run: yarn install --frozen-lockfile
       
-      - name: Bump version
+      - name: Create version bump branch
         working-directory: ./clients/trieve-fern-adapter
         run: |
-          git pull origin main
+          BRANCH_NAME="chore/bump-trieve-fern-adapter-version-$(date +%s)"
+          git checkout -b $BRANCH_NAME
           yarn version --patch --no-git-tag-version
           git add package.json
           git commit -m "chore: bump trieve-fern-adapter version to $(node -p "require('./package.json').version")"
-      
-      - name: Push changes
-        working-directory: ./clients/trieve-fern-adapter
-        run: |
-          git push origin main
+          git push origin $BRANCH_NAME
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "chore: bump trieve-fern-adapter version"
+          body: "Automated version bump for trieve-fern-adapter"
+          branch: ${{ env.BRANCH_NAME }}
+          base: main
       
       - name: Publish
         working-directory: ./clients/trieve-fern-adapter

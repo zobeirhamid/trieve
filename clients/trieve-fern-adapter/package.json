@@ -1,6 +1,6 @@
 {
-  "name": "trieve-fern-adapter",
-  "version": "0.0.5",
+  "name": "@zobeir/trieve-fern-adapter",
+  "version": "1.0.2",
   "type": "module",
   "main": "dist/index.js",
   "bin": "dist/index.js",
