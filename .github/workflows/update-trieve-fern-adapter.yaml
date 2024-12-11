@@ -16,7 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
       
     steps:
       - name: Checkout repository
@@ -53,18 +52,6 @@ jobs:
           git add package.json
           git commit -m "chore: bump trieve-fern-adapter version to ${CURRENT_VERSION}"
           git push origin $BRANCH_NAME
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          title: "chore: bump trieve-fern-adapter to v${{ env.CURRENT_VERSION }}"
-          body: |
-            This PR was automatically created by the release workflow.
-            
-            Changes:
-            - Bumps trieve-fern-adapter version to ${{ env.CURRENT_VERSION }}
-          base: main
-          branch: ${{ env.BRANCH_NAME }}
 
       - name: Publish
         working-directory: ./clients/trieve-fern-adapter
