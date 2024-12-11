@@ -45,6 +45,7 @@ jobs:
         working-directory: ./clients/trieve-fern-adapter
         run: |
           BRANCH_NAME="chore/bump-trieve-fern-adapter-version-$(date +%s)"
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
           git checkout -b $BRANCH_NAME
           yarn version --patch --no-git-tag-version
           git add package.json
