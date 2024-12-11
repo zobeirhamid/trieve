@@ -53,6 +53,15 @@ jobs:
           git commit -m "chore: bump trieve-fern-adapter version to ${CURRENT_VERSION}"
           git push origin $BRANCH_NAME
 
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "chore: bump trieve-fern-adapter version"
+          body: "Automated version bump for trieve-fern-adapter"
+          branch: ${{ env.BRANCH_NAME }}
+          base: main
+      
       - name: Publish
         working-directory: ./clients/trieve-fern-adapter
         run: yarn publish
